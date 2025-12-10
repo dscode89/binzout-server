@@ -7,12 +7,12 @@ jobs:
   Build and run mock tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        - uses: actions/checkout@v3
-        - uses: dart-lang/setup-dart@v1
+      name: Checkout code
+        uses: actions/checkout@v3
+        uses: dart-lang/setup-dart@v1
 
-        - run: dart pub get
-        - run: dart test/endpoint_mock_tests.dart
+        run: dart pub get
+        run: dart test/endpoint_mock_tests.dart
         
 
   
