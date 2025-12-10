@@ -1,0 +1,26 @@
+name: Binzout Backend Pipeline
+
+on:
+  pull_request
+
+jobs:
+  Build-and-run-mock-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Dart  
+        uses: dart-lang/setup-dart@v1
+      
+      - name: Install dependencies
+        run: dart pub get
+      
+      - name: Run mock test suite
+        run: dart test test/endpoint_mock_tests.dart
+        
+
+  
+
+           
+        
