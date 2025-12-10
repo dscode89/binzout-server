@@ -1,5 +1,6 @@
-import 'package:binzout_server/binzout_server.dart' as binzout_server;
+import 'package:binzout_server/handlers/prod_route_handler.dart';
+import 'package:binzout_server/utilities/generateServerConnection.dart';
 
-void main(List<String> arguments) {
-  print('Hello world: ${binzout_server.calculate()}!');
+void main() async {
+  await generateServerConnection(ProdRouteHandler().handler, 'localhost', 8054);
 }
