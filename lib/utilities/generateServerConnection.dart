@@ -4,10 +4,9 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 
 Future<HttpServer> generateServerConnection(
   Handler handler,
-  String host,
-  int port,
-) async {
-  
+  String host, [
+  int port = 0,
+]) async {
   final logRequestMiddleware = createMiddleware(
     requestHandler: (Request request) {
       print(request);
