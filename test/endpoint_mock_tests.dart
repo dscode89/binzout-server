@@ -36,10 +36,22 @@ void main() async {
           {"date": "2025-12-22T00:00:00", "type": 1, "calendarNumber": 6},
         ]);
 
-        print(response.body);
-
         expect(response.statusCode, equals(200));
         expect(response.body, equals(testResponse));
+      },
+    );
+    test(
+      '404: Server returns 404 not found when a provided postcode returns no schedule or is not a valid postcode',
+      () async {
+        final response = await http.get(
+          Uri.parse('http://localhost:$port/api/bins/postcode/invalidPostcode'),
+        );
+
+        expect(response.statusCode, 404);
+        expect(
+          response.body,
+          "404: Could not find information for this postcode.",
+        );
       },
     );
   });

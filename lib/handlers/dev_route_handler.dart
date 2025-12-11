@@ -11,8 +11,8 @@ class DevRouteHandler extends ProdRouteHandler {
         {"Date": "2025-12-15T00:00:00", "Type": 3, "CalendarNumber": 6},
         {"Date": "2025-12-22T00:00:00", "Type": 1, "CalendarNumber": 6},
       ]);
+    } else {
+      return jsonEncode([]);
     }
-
-    return "unknown";
   }
 }
