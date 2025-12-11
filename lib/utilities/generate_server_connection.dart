@@ -7,16 +7,7 @@ Future<HttpServer> generateServerConnection(
   String host, [
   int port = 0,
 ]) async {
-  final logRequestMiddleware = createMiddleware(
-    requestHandler: (Request request) {
-      print(request);
-      return null;
-    },
-  );
-
-  final routeHandler = Pipeline()
-      .addMiddleware(logRequestMiddleware)
-      .addHandler(handler);
+  final routeHandler = Pipeline().addHandler(handler);
 
   final httpServer = await shelf_io.serve(routeHandler, host, port);
 

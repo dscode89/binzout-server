@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:binzout_server/handlers/dev_route_handler.dart';
-import 'package:binzout_server/utilities/generateServerConnection.dart';
+import 'package:binzout_server/utilities/generate_server_connection.dart';
 import 'package:test/test.dart';
 import 'package:http/http.dart' as http;
 
@@ -52,6 +52,20 @@ void main() async {
           response.body,
           "404: Could not find information for this postcode.",
         );
+      },
+    );
+  });
+
+  group('Errors', () {
+    test(
+      'Server will return a 404 when provided an unrecognised endpoint',
+      () async {
+        final response = await http.get(
+          Uri.parse('http://localhost:$port/whatisthis'),
+        );
+
+        expect(response.statusCode, equals(404));
+        expect(response.body, equals("404: Endpoint not recognised."));
       },
     );
   });
