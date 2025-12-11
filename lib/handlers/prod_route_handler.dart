@@ -9,6 +9,10 @@ import 'package:shelf/shelf.dart';
 class ProdRouteHandler {
   Future<Response> handler(Request request) async {
     try {
+      if (request.method != "GET") {
+        return Response.badRequest(body: "400: Method not allowed.");
+      }
+
       final String url = request.url.toString();
       RegExp postcodeExp = RegExp(r'api/bins/postcode');
 
