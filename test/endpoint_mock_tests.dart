@@ -91,5 +91,33 @@ void main() async {
       },
       timeout: Timeout(Duration(seconds: 35)),
     );
+    test(
+      '400: Any method other than a GET request will return an error message',
+      () async {
+        final responseOne = await http.post(
+          Uri.parse('http://localhost:$port/api/healthcheck'),
+        );
+        final responseTwo = await http.put(
+          Uri.parse('http://localhost:$port/api/healthcheck'),
+        );
+        final responseThree = await http.patch(
+          Uri.parse('http://localhost:$port/api/healthcheck'),
+        );
+        final responseFour = await http.delete(
+          Uri.parse('http://localhost:$port/api/healthcheck'),
+        );
+
+        expect(responseOne.statusCode, equals(400));
+        expect(responseTwo.statusCode, equals(400));
+        expect(responseThree.statusCode, equals(400));
+        expect(responseFour.statusCode, equals(400));
+
+        print(responseOne.body);
+        expect(responseOne.body, equals("400: Method not allowed."));
+        expect(responseTwo.body, equals("400: Method not allowed."));
+        expect(responseThree.body, equals("400: Method not allowed."));
+        expect(responseFour.body, equals("400: Method not allowed."));
+      },
+    );
   });
 }
