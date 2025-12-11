@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:binzout_server/classes/BinScheduleEvent.dart';
 import 'package:binzout_server/utilities/type_sssert_json_list.dart';
+import 'package:http/http.dart' as http;
 import 'package:shelf/shelf.dart';
 
 class ProdRouteHandler {
@@ -52,6 +53,12 @@ class ProdRouteHandler {
   }
 
   Future<String> fetchBinScheduleData(String postcode) async {
-    return "hello";
+    final apiUrl = Uri.parse(
+      'https://api.liverpool.gov.uk/api/Bins/Postcode/$postcode',
+    );
+    final response = await http.get(apiUrl);
+    final scheduleData = response.body;
+
+    return scheduleData;
   }
 }
