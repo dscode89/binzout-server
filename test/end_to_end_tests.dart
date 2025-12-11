@@ -8,7 +8,7 @@ import 'package:test/test.dart';
 void main() async {
   final server = await generateServerConnection(
     ProdRouteHandler().handler,
-    "0.0.0.0",
+    "localhost",
   );
   final port = server.port;
 
