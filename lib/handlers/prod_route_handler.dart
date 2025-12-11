@@ -19,11 +19,18 @@ class ProdRouteHandler {
         jsonScheduleData,
         BinScheduleEvent.fromJson,
       );
-      binScheduleData.sort(
-        (a, b) => DateTime.parse(a.date).compareTo(DateTime.parse(b.date)),
-      );
 
-      return Response.ok(jsonEncode(binScheduleData));
+      if (binScheduleData.isEmpty) {
+        return Response.notFound(
+          "404: Could not find information for this postcode.",
+        );
+      } else {
+        binScheduleData.sort(
+          (a, b) => DateTime.parse(a.date).compareTo(DateTime.parse(b.date)),
+        );
+
+        return Response.ok(jsonEncode(binScheduleData));
+      }
     }
 
     return Response.notFound('404: Could not find endpoint.');
