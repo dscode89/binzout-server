@@ -1,0 +1,51 @@
+{
+  "service": "Binzout Web Server",
+  "version": "1.0.0",
+  "baseUrl": "https://binzout-server.onrender.com",
+  "endpoints": [
+    {
+      "name": "Healthcheck",
+      "method": "GET",
+      "path": "/api/healthcheck",
+      "description": "Endpoint for fetching a healthcheck message.",
+      "responses": {
+        "200": {
+          "description": "200: Your server is listening :)"
+        }
+      }
+    },
+    {
+      "name": "Fetch Bin Schedule Data",
+      "method": "GET",
+      "path": "/api/bins/postcode/<postcode>",
+      "description": "Fetches the next available bin schedule data from a provided postcode.",
+      "responses": {
+        "200": {
+          "description": "Successful response",
+          "body": [
+            { "Date": "2025-12-15T00:00:00", "Type": 2, "CalendarNumber": 6 },
+            { "Date": "2025-12-15T00:00:00", "Type": 3, "CalendarNumber": 6 },
+            { "Date": "2025-12-22T00:00:00", "Type": 1, "CalendarNumber": 6 }
+          ]
+        },
+        "404": {
+          "description": "404: Could not find information for this postcode."
+        },
+        "408": {
+          "description": "408: Server has timed out."
+        }
+      }
+    },
+    {
+      "name": "Unrecognised Endpoint",
+      "method": "GET POST PATCH PUT DELETE",
+      "path": "/<any unrecognised endpoint>",
+      "description": "Generic catch all for endpoints that are not recognised by the web server.",
+      "responses": {
+        "200": {
+          "description": "404: Endpoint not recognised."
+        }
+      }
+    }
+  ]
+}

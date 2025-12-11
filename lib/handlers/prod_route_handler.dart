@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:binzout_server/classes/BinScheduleEvent.dart';
 import 'package:binzout_server/utilities/type_sssert_json_list.dart';
 import 'package:http/http.dart' as http;
@@ -11,7 +12,11 @@ class ProdRouteHandler {
       final String url = request.url.toString();
       RegExp postcodeExp = RegExp(r'api/bins/postcode');
 
-      if (url == 'api/healthcheck') {
+      if (url.isEmpty) {
+        final endpointsFile = await File("./endpoints.json").readAsString();
+
+        return Response.ok(endpointsFile);
+      } else if (url == 'api/healthcheck') {
         final String healthCheckMessage = returnHealthCheckMessage();
         return Response.ok(healthCheckMessage);
       } else if (postcodeExp.hasMatch(url)) {

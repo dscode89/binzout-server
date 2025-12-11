@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:binzout_server/handlers/dev_route_handler.dart';
 import 'package:binzout_server/utilities/generate_server_connection.dart';
 import 'package:test/test.dart';
@@ -18,6 +19,17 @@ void main() async {
 
       expect(response.statusCode, equals(200));
       expect(response.body, equals("200: Your server is listening :)"));
+    });
+  });
+
+  group('/', () {
+    test('200: Will return api documentation for web server', () async {
+      final requestUrl = Uri.parse('http://localhost:$port');
+      final response = await http.get(requestUrl);
+      final file = await File("./endpoints.json").readAsString();
+
+      expect(response.statusCode, equals(200));
+      expect(response.body, equals(file));
     });
   });
 
