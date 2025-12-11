@@ -11,6 +11,14 @@ class DevRouteHandler extends ProdRouteHandler {
         {"Date": "2025-12-15T00:00:00", "Type": 3, "CalendarNumber": 6},
         {"Date": "2025-12-22T00:00:00", "Type": 1, "CalendarNumber": 6},
       ]);
+    } else if (postcode == "L167PG") {
+      Future<String> delayedResponse() async {
+        await Future.delayed(const Duration(seconds: 31));
+        return "I never get thrown";
+      }
+
+      final response = await Future.any([delayedResponse()]);
+      return response;
     } else {
       return jsonEncode([]);
     }

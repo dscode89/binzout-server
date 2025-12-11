@@ -68,5 +68,16 @@ void main() async {
         expect(response.body, equals("404: Endpoint not recognised."));
       },
     );
+    test(
+      '408: Server will return a timout error if a request times out after 30 seconds',
+      () async {
+        final response = await http.get(
+          Uri.parse('http://localhost:$port/api/bins/postcode/L167PG'),
+        );
+        expect(response.statusCode, equals(408));
+        expect(response.body, "408: Server has timed out.");
+      },
+      timeout: Timeout(Duration(seconds: 35)),
+    );
   });
 }
