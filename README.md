@@ -1,36 +1,38 @@
-# Binzout
+# BinZout
 
-Binzout is a web application built with Dart that helps users find the next available dates for putting their bins out for collection. By entering a postcode, users can quickly view their local bin collection schedule, making waste management simpler and more convenient.
+This app has been a project to practice the wonderful language of Dart.
+
+BinZout is a web application built with Dart that helps users find the next available dates for putting their bins out for collection(Currently only for residents of Liverpool, UK). By entering a postcode, users can quickly view their next bin collection schedule, making waste management simpler and more convenient.
 
 ## Features
 
 - Enter your postcode to fetch bin collection dates.
-- Displays upcoming bin collection types and dates.
-- Lightweight and fast Dart web app.
-- Easy-to-extend architecture using JSON-based endpoints.
+- Display upcoming bin collection types and dates.
+- Add to your personal calendar(Not MVP but will be a feature in future iteration)
 
 ## Requirements
 
-This app has been a project to practice and try out the wonderful language of Dart.
+### Prerequisites
 
-> Prerequisites
-
-If you don't want to to run this application wih docker you will need he following:
+If you don't want to to run this application wih [Docker](https://www.docker.com/) you will need the following:
 
 - Dart SDK >= 3.10.4
 
-[Installation instructions here] (https://dart.dev/get-dart);
+[Installation instructions here](https://dart.dev/get-dart)
 
-If you do want to run this application via docker, you can download the image here: 
+If you do want to run this application via docker, you can pull down the image via this command:
 
+> docker pull twotriangles/binzout-server:binzout
 
+and run it with the following command:
 
-## Running the App
+> docker run -p <HOST_PORT>:8080 twotriangles/binzout-server:binzout
+
+## Running the App(if not using Docker)
 
 ### 1. Clone Repository
 
-- clone repo
-- cd binzout
+> gh repo clone dscode89/binzout-server
 
 ### 2. Install dependencies
 
