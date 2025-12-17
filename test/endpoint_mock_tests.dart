@@ -112,7 +112,6 @@ void main() async {
         expect(responseThree.statusCode, equals(400));
         expect(responseFour.statusCode, equals(400));
 
-        print(responseOne.body);
         expect(responseOne.body, equals("400: Method not allowed."));
         expect(responseTwo.body, equals("400: Method not allowed."));
         expect(responseThree.body, equals("400: Method not allowed."));
