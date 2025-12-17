@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:binzout_server/classes/BinScheduleEvent.dart';
-import 'package:binzout_server/utilities/type_sssert_json_list.dart';
+import 'package:binzout_server/classes/bin_schedule_event.dart';
+import 'package:binzout_server/utilities/type_assert_json_list.dart';
 import 'package:test/test.dart';
 
 void main() {
