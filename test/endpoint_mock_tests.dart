@@ -35,7 +35,7 @@ void main() async {
 
   group('api/bins/postcode/<postcode>', () {
     test(
-      '200: Server will return the next bin schedule for a provided postcode, in date order asc',
+      '200: Server will return the next bin schedule for a provided postcode',
       () async {
         final requestUrl = Uri.parse(
           'http://localhost:$port/api/bins/postcode/L167PQ',
@@ -43,9 +43,9 @@ void main() async {
         final response = await http.get(requestUrl);
 
         final testResponse = jsonEncode([
-          {"date": "2025-12-15T00:00:00", "type": 2, "calendarNumber": 6},
-          {"date": "2025-12-15T00:00:00", "type": 3, "calendarNumber": 6},
-          {"date": "2025-12-22T00:00:00", "type": 1, "calendarNumber": 6},
+          {"Date": "2025-12-15T00:00:00", "Type": 2, "CalendarNumber": 6},
+          {"Date": "2025-12-15T00:00:00", "Type": 3, "CalendarNumber": 6},
+          {"Date": "2025-12-22T00:00:00", "Type": 1, "CalendarNumber": 6},
         ]);
 
         expect(response.statusCode, equals(200));
