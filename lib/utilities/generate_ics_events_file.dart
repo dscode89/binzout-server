@@ -1,8 +1,6 @@
 import 'dart:io';
-
 import 'package:binzout_server/classes/bin_schedule_event.dart';
 import 'package:binzout_server/classes/calendar_events_file_meta.dart';
-
 import 'package:uuid/uuid.dart';
 
 Future<CalendarEventsFileMeta> generateIcsEventsFile(

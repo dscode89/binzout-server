@@ -17,7 +17,7 @@ class ProdRouteHandler {
       }
 
       if (request.method == "POST") {
-        if (url == "api/generateCalendarEvent") {
+        if (url == "api/generateCalendarEvents") {
           final String body = await request.readAsString();
 
           final formattedRequestBody = typeAssertJsonList(
