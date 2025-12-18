@@ -54,6 +54,7 @@ class ProdRouteHandler {
 
           return Response.ok(jsonScheduleData);
         }
+        return Response.notFound('404: Endpoint not recognised.');
       } else {
         return Response.notFound('404: Endpoint not recognised.');
       }
