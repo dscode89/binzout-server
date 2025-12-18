@@ -17,49 +17,42 @@ class ProdRouteHandler {
       }
 
       if (request.method == "POST") {
-        final String body = await request.readAsString();
+        if (url == "api/generateCalendarEvent") {
+          final String body = await request.readAsString();
 
-        final formattedRequestBody = typeAssertJsonList(
-          body,
-          BinScheduleEvent.fromJson,
-        );
-
-        final calendarFileMeta = await generateIcsEventsFile(
-          formattedRequestBody,
-        );
-
-        return Response.ok(
-          calendarFileMeta.bytes,
-          headers: {'Content-Type': 'text/calendar; charset=utf-8'},
-        );
-      } else if (url.isEmpty) {
-        final endpointsFile = await File("./endpoints.json").readAsString();
-
-        return Response.ok(endpointsFile);
-      } else if (url == 'api/healthcheck') {
-        final String healthCheckMessage = returnHealthCheckMessage();
-        return Response.ok(healthCheckMessage);
-      } else if (postcodeExp.hasMatch(url)) {
-        final postcode = url.split("/")[3];
-        final jsonScheduleData = await fetchBinScheduleData(
-          postcode,
-        ).timeout(Duration(seconds: 30));
-
-        final binScheduleData = typeAssertJsonList(
-          jsonScheduleData,
-          BinScheduleEvent.fromJson,
-        );
-
-        if (binScheduleData.isEmpty) {
-          return Response.notFound(
-            "404: Could not find information for this postcode.",
-          );
-        } else {
-          binScheduleData.sort(
-            (a, b) => DateTime.parse(a.date).compareTo(DateTime.parse(b.date)),
+          final formattedRequestBody = typeAssertJsonList(
+            body,
+            BinScheduleEvent.fromJson,
           );
 
-          return Response.ok(jsonEncode(binScheduleData));
+          final calendarFileMeta = await generateIcsEventsFile(
+            formattedRequestBody,
+          );
+
+          return Response.ok(
+            calendarFileMeta.bytes,
+            headers: {'Content-Type': 'text/calendar; charset=utf-8'},
+          );
+        } else if (url.isEmpty) {
+          final endpointsFile = await File("./endpoints.json").readAsString();
+
+          return Response.ok(endpointsFile);
+        } else if (url == 'api/healthcheck') {
+          final String healthCheckMessage = returnHealthCheckMessage();
+          return Response.ok(healthCheckMessage);
+        } else if (postcodeExp.hasMatch(url)) {
+          final postcode = url.split("/")[3];
+          final jsonScheduleData = await fetchBinScheduleData(
+            postcode,
+          ).timeout(Duration(seconds: 30));
+
+          if (jsonScheduleData == "[]") {
+            return Response.notFound(
+              "404: Could not find information for this postcode.",
+            );
+          }
+
+          return Response.ok(jsonScheduleData);
         }
       } else {
         return Response.notFound('404: Endpoint not recognised.');
