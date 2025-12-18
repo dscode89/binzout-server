@@ -1,7 +1,9 @@
 import 'dart:convert';
 
+import 'package:binzout_server/classes/bin_schedule_event.dart';
 import 'package:binzout_server/handlers/prod_route_handler.dart';
 import 'package:binzout_server/utilities/generate_server_connection.dart';
+import 'package:binzout_server/utilities/type_assert_json_list.dart';
 import 'package:http/http.dart' as http;
 import 'package:test/test.dart';
 
@@ -24,30 +26,19 @@ void main() async {
 
   group('api/bins/postcode/<postcode>', () {
     test(
-      '200: Server will return the next bin schedule for a provided postcode, in date order asc',
+      '200: Server will return the next bin schedule for a provided postcode',
       () async {
         final requestUrl = Uri.parse(
           'http://localhost:$port/api/bins/postcode/L167PQ',
         );
         final response = await http.get(requestUrl);
-        final parsedBody = jsonDecode(response.body);
-        assert(parsedBody is List<dynamic>);
+        final parsedBody = typeAssertJsonList(
+          response.body,
+          BinScheduleEvent.fromJson,
+        );
 
         expect(response.statusCode, equals(200));
         expect(parsedBody.length, equals(3));
-        expect(
-          parsedBody,
-          everyElement(
-            predicate((element) {
-              if (element is Map<String, dynamic>) {
-                return element['date'] != null &&
-                    element['type'] != null &&
-                    element['calendarNumber'] != null;
-              }
-              return false;
-            }),
-          ),
-        );
       },
     );
   });
