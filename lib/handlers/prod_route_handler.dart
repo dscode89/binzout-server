@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
+
 import 'dart:io';
 import 'package:binzout_server/classes/bin_schedule_event.dart';
 import 'package:binzout_server/utilities/generate_ics_events_file.dart';
@@ -33,28 +33,28 @@ class ProdRouteHandler {
             calendarFileMeta.bytes,
             headers: {'Content-Type': 'text/calendar; charset=utf-8'},
           );
-        } else if (url.isEmpty) {
-          final endpointsFile = await File("./endpoints.json").readAsString();
-
-          return Response.ok(endpointsFile);
-        } else if (url == 'api/healthcheck') {
-          final String healthCheckMessage = returnHealthCheckMessage();
-          return Response.ok(healthCheckMessage);
-        } else if (postcodeExp.hasMatch(url)) {
-          final postcode = url.split("/")[3];
-          final jsonScheduleData = await fetchBinScheduleData(
-            postcode,
-          ).timeout(Duration(seconds: 30));
-
-          if (jsonScheduleData == "[]") {
-            return Response.notFound(
-              "404: Could not find information for this postcode.",
-            );
-          }
-
-          return Response.ok(jsonScheduleData);
         }
-        return Response.notFound('404: Endpoint not recognised.');
+      }
+
+      if (url.isEmpty) {
+        final endpointsFile = await File("./endpoints.json").readAsString();
+        return Response.ok(endpointsFile);
+      } else if (url == 'api/healthcheck') {
+        final String healthCheckMessage = returnHealthCheckMessage();
+        return Response.ok(healthCheckMessage);
+      } else if (postcodeExp.hasMatch(url)) {
+        final postcode = url.split("/")[3];
+        final jsonScheduleData = await fetchBinScheduleData(
+          postcode,
+        ).timeout(Duration(seconds: 30));
+
+        if (jsonScheduleData == "[]") {
+          return Response.notFound(
+            "404: Could not find information for this postcode.",
+          );
+        }
+
+        return Response.ok(jsonScheduleData);
       } else {
         return Response.notFound('404: Endpoint not recognised.');
       }
