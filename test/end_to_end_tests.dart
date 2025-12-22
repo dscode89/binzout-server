@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:binzout_server/classes/bin_schedule_event.dart';
 import 'package:binzout_server/handlers/prod_route_handler.dart';
 import 'package:binzout_server/utilities/generate_server_connection.dart';

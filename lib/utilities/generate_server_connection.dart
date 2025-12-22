@@ -8,7 +8,10 @@ Future<HttpServer> generateServerConnection(
   String host, [
   int port = 0,
 ]) async {
-  final listChecker = originOneOf(['http://localhost:60000']);
+  final listChecker = originOneOf([
+    'http://localhost:60000',
+    'https://www.binzout.co.uk',
+  ]);
 
   final routeHandler = Pipeline()
       .addMiddleware(corsHeaders(originChecker: listChecker))

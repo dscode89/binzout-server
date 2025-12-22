@@ -59,6 +59,13 @@ class ProdRouteHandler {
         return Response.notFound('404: Endpoint not recognised.');
       }
     } catch (e) {
+      if (e == "Error with request") {
+        return Response(
+          500,
+          body: "500: Something went wrong with your request.",
+        );
+      }
+
       if (e is TimeoutException) {
         return Response(408, body: "408: Server has timed out.");
       }
@@ -76,8 +83,12 @@ class ProdRouteHandler {
       'https://api.liverpool.gov.uk/api/Bins/Postcode/$postcode',
     );
     final response = await http.get(apiUrl);
-    final scheduleData = response.body;
 
+    if (response.statusCode == 500) {
+      return Future.error("Error with request");
+    }
+
+    final scheduleData = response.body;
     return scheduleData;
   }
 }
